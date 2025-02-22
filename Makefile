@@ -21,8 +21,8 @@ Xilinx.img: Xilinx.img.tmp
 		sudo -H -u user bash -c "cd /mnt && sudo mkdir -p /tools/Xilinx && sudo mount -o loop Xilinx.img.tmp /tools/Xilinx && sudo chown user:users /tools/Xilinx && ./install.sh"
 		mv Xilinx.img.tmp Xilinx.img
 
-.PHONY: docker-bash
-docker-bash:
+.PHONY: bash
+bash:
 	docker run --init --rm -it --privileged \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
@@ -30,8 +30,8 @@ docker-bash:
 		--platform linux/amd64 $(PROJECT_NAME) \
 		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && bash"
 
-.PHONY: docker-vivado
-docker-vivado:
+.PHONY: vivado
+vivado:
 	xhost +
 	docker run --init --rm -it --privileged \
 		-e DISPLAY=host.docker.internal:0 \
@@ -40,8 +40,8 @@ docker-vivado:
 		--platform linux/amd64 $(PROJECT_NAME) \
 		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && ./start_vivado.sh"
 
-.PHONY: docker-vitis-hls
-docker-vitis-hls:
+.PHONY: vitis-hls
+vitis-hls:
 	xhost +
 	docker run --init --rm -it --privileged \
 		-e DISPLAY=host.docker.internal:0 \
