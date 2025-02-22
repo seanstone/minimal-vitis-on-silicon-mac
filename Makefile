@@ -5,13 +5,20 @@ MOUNT_XILINX =
 docker:
 	docker build -t $(PROJECT_NAME) .
 
-Xilinx.img:
+Xilinx.img.tmp:
 	truncate -s 120G Xilinx.img.tmp
 	docker run --init --rm -it --privileged \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
 		--platform linux/amd64 $(PROJECT_NAME) \
-		sudo -H -u user bash -c "cd /mnt && mkfs.ext4 Xilinx.img.tmp && sudo mkdir -p /tools/Xilinx && sudo mount -o loop Xilinx.img.tmp /tools/Xilinx && sudo chown user:users /tools/Xilinx && ./install.sh"
+		sudo -H -u user bash -c "cd /mnt && mkfs.ext4 Xilinx.img.tmp"
+
+Xilinx.img: Xilinx.img.tmp
+	docker run --init --rm -it --privileged \
+		-e DISPLAY=host.docker.internal:0 \
+		-v .:/mnt \
+		--platform linux/amd64 $(PROJECT_NAME) \
+		sudo -H -u user bash -c "cd /mnt && sudo mkdir -p /tools/Xilinx && sudo mount -o loop Xilinx.img.tmp /tools/Xilinx && sudo chown user:users /tools/Xilinx && ./install.sh"
 		mv Xilinx.img.tmp Xilinx.img
 
 .PHONY: docker-bash
