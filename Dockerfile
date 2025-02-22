@@ -17,10 +17,12 @@ RUN apt install -y --no-install-recommends \
 
 # install dependencies for Vitis
 RUN apt-get install -y --no-install-recommends \
-    libnss3 libasound2 libsecret-1-0
-
-RUN apt-get install -y --no-install-recommends \
+    libnss3 libasound2 libsecret-1-0 \
     libxtst6 file
+
+# install ncdu for calculating disk space usage
+RUN apt-get install -y --no-install-recommends \
+    ncdu
 
 # Set the locale, because Vivado crashes otherwise
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
