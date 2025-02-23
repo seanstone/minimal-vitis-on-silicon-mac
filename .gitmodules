@@ -1,3 +1,0 @@
-[submodule "usbip"]
-	path = usbip
-	url = https://github.com/jiegec/usbip.git

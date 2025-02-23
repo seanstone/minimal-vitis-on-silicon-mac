@@ -1,5 +1,4 @@
 PROJECT_NAME = minimal-vitis-on-silicon-mac
-MOUNT_XILINX = 
 
 .PHONY: docker
 docker:
@@ -7,14 +6,14 @@ docker:
 
 Xilinx.img.tmp:
 	truncate -s 120G Xilinx.img
-	docker run --init --rm -it --privileged --pid=host \
+	docker run --init --rm -it --privileged \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
 		--platform linux/amd64 $(PROJECT_NAME) \
 		sudo -H -u user bash -c "cd /mnt && mkfs.ext4 Xilinx.img.tmp"
 
 Xilinx.img: Xilinx.img.tmp
-	docker run --init --rm -it --privileged --pid=host \
+	docker run --init --rm -it --privileged \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
 		--platform linux/amd64 $(PROJECT_NAME) \
@@ -23,7 +22,7 @@ Xilinx.img: Xilinx.img.tmp
 
 .PHONY: bash
 bash:
-	docker run --init --rm -it --privileged --pid=host \
+	docker run --init --rm -it --privileged \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -33,7 +32,7 @@ bash:
 .PHONY: vivado
 vivado:
 	xhost +
-	docker run --init --rm -it --privileged --pid=host \
+	docker run --init --rm -it --privileged \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -43,16 +42,9 @@ vivado:
 .PHONY: vitis-hls
 vitis-hls:
 	xhost +
-	docker run --init --rm -it --privileged --pid=host \
+	docker run --init --rm -it --privileged \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt\
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		--platform linux/amd64 $(PROJECT_NAME) \
 		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && ./start_vitis_hls.sh"
-
-.PHONY: usb
-usb: usbip/target/debug/examples/host
-	cd usbip && env RUST_LOG=info cargo run --example host
-
-usbip/target/debug/examples/host:
-	cd usbip && cargo build --examples
