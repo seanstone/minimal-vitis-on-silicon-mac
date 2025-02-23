@@ -1,0 +1,3 @@
+[submodule "XilinxVirtualCable"]
+	path = XilinxVirtualCable
+	url = https://github.com/Xilinx/XilinxVirtualCable.git
