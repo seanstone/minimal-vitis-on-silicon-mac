@@ -49,3 +49,10 @@ vitis-hls:
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		--platform linux/amd64 $(PROJECT_NAME) \
 		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && ./start_vitis_hls.sh"
+
+.PHONY: usb
+usb: usbip/target/debug/examples/host
+	cd usbip && env RUST_LOG=info cargo run --example host
+
+usbip/target/debug/examples/host:
+	cd usbip && cargo build --examples
