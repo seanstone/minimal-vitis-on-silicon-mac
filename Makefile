@@ -6,15 +6,15 @@ docker:
 	docker build -t $(PROJECT_NAME) .
 
 Xilinx.img.tmp:
-	truncate -s 120G Xilinx.img.tmp
-	docker run --init --rm -it --privileged \
+	truncate -s 120G Xilinx.img
+	docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
 		--platform linux/amd64 $(PROJECT_NAME) \
 		sudo -H -u user bash -c "cd /mnt && mkfs.ext4 Xilinx.img.tmp"
 
 Xilinx.img: Xilinx.img.tmp
-	docker run --init --rm -it --privileged \
+	docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
 		--platform linux/amd64 $(PROJECT_NAME) \
@@ -23,7 +23,7 @@ Xilinx.img: Xilinx.img.tmp
 
 .PHONY: bash
 bash:
-	docker run --init --rm -it --privileged \
+	docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -33,7 +33,7 @@ bash:
 .PHONY: vivado
 vivado:
 	xhost +
-	docker run --init --rm -it --privileged \
+	docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -43,7 +43,7 @@ vivado:
 .PHONY: vitis-hls
 vitis-hls:
 	xhost +
-	docker run --init --rm -it --privileged \
+	docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt\
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
