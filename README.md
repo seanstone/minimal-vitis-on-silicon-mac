@@ -31,3 +31,23 @@ usbip attach -r host.docker.internal -b 1-1
 ```console
 lsusb
 ```
+
+## xvcd
+
+```console
+(cd xvcd && make)
+```
+
+```console
+./bin/xvcd -v
+```
+
+In the container,
+
+```console
+source /tools/Xilinx/Vivado/2024.2/settings64.sh
+```
+
+```console
+hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:2542" &
+```
