@@ -1,6 +1,6 @@
 [submodule "xvcd"]
 	path = xvcd
-	url = https://github.com/tmbinc/xvcd.git
+	url = https://github.com/seanstone/xvcd.git
 [submodule "pyusbip"]
 	path = pyusbip
 	url = https://github.com/tumayt/pyusbip
