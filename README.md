@@ -73,3 +73,11 @@ source /tools/Xilinx/Vivado/2024.2/settings64.sh
 ```console
 hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:2542" &
 ```
+
+## References
+
+* https://github.com/ichi4096/vivado-on-silicon-mac
+* https://github.com/ichi4096/vivado-on-silicon-mac/issues/37
+* https://www.reddit.com/r/FPGA/comments/z2gqk2/vitis_hls_closing_immediately/
+* https://docs.docker.com/desktop/features/usbip/
+* https://github.com/ichi4096/vivado-on-silicon-mac/issues/52
