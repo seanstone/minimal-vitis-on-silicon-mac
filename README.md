@@ -32,6 +32,14 @@ usbip attach -r host.docker.internal -b 1-1
 lsusb
 ```
 
+```console
+exit
+```
+
+```console
+program_ftdi -write -ftdi FT2232H -serial 0ABC01 -vendor "my vendor co" -board "my board" -desc "my product desc"
+```
+
 ## xvcd
 
 ```console
