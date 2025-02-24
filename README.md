@@ -7,27 +7,27 @@ Adapted from https://github.com/ichi4096/vivado-on-silicon-mac
 Install Docker Desktop >= 4.35.0
 
 ```console
-$ pip install libusb1
+pip install libusb1
 ```
 
 ```console
-$ (cd pyusbip && python pyusbip.py)
+(cd pyusbip && python pyusbip.py)
 ```
 
 In the container,
 
 ```console
-$ sudo nsenter -t 1 -m
+sudo nsenter -t 1 -m
 ```
 
 ```console
-# usbip list -r host.docker.internal
+usbip list -r host.docker.internal
 ```
 
 ```console
-# usbip attach -r host.docker.internal -b 1-1
+usbip attach -r host.docker.internal -b 1-1
 ```
 
 ```console
-# lsusb
+lsusb
 ```
