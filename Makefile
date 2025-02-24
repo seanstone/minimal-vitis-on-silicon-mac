@@ -40,12 +40,12 @@ vivado:
 		--platform linux/amd64 $(PROJECT_NAME) \
 		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && ./start_vivado.sh"
 
-.PHONY: vitis-hls
-vitis-hls:
+.PHONY: vitis
+vitis:
 	xhost +
 	docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt\
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		--platform linux/amd64 $(PROJECT_NAME) \
-		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && ./start_vitis_hls.sh"
+		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && ./start_vitis.sh"

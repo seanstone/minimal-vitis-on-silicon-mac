@@ -18,7 +18,8 @@ RUN apt install -y --no-install-recommends \
 # install dependencies for Vitis
 RUN apt-get install -y --no-install-recommends \
     libnss3 libasound2 libsecret-1-0 \
-    libxtst6 file
+    libxtst6 file \
+    libgtk2.0-0 libswt-gtk-4-java xorg
 
 # install x11-utils for xlsclients
 RUN apt-get install -y --no-install-recommends \
