@@ -11,7 +11,7 @@ pip install libusb1
 ```
 
 ```console
-(cd pyusbip && python pyusbip)
+(cd pyusbip && python pyusbip.py)
 ```
 
 In the container,

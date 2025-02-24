@@ -22,6 +22,7 @@ Xilinx.img: Xilinx.img.tmp
 
 .PHONY: bash
 bash:
+	xhost +
 	docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
 		-v .:/mnt \

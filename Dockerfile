@@ -20,6 +20,10 @@ RUN apt-get install -y --no-install-recommends \
     libnss3 libasound2 libsecret-1-0 \
     libxtst6 file
 
+# install x11-utils for xlsclients
+RUN apt-get install -y --no-install-recommends \
+    x11-utils
+
 # install ncdu for calculating disk space usage
 RUN apt-get install -y --no-install-recommends \
     ncdu
