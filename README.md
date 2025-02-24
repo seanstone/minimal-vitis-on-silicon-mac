@@ -2,7 +2,7 @@
 
 Adapted from https://github.com/ichi4096/vivado-on-silicon-mac
 
-## USB
+## USB/IP
 
 Install Docker Desktop >= 4.35.0
 
