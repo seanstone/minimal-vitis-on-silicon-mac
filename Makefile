@@ -16,28 +16,23 @@ docker:
 
 Xilinx.img.tmp:
 	truncate -s 120G Xilinx.img
-	$(DOCKER_CMD) \
-		bash -c "cd /mnt && mkfs.ext4 Xilinx.img.tmp"
+	$(DOCKER_CMD) bash -c "cd /mnt && mkfs.ext4 Xilinx.img.tmp"
 
 Xilinx.img: Xilinx.img.tmp
-	$(DOCKER_CMD) \
-		bash -c "cd /mnt && sudo mkdir -p /tools/Xilinx && sudo mount -o loop Xilinx.img.tmp /tools/Xilinx && sudo chown user:users /tools/Xilinx && ./install.sh"
-		mv Xilinx.img.tmp Xilinx.img
+	$(DOCKER_CMD) bash -c "cd /mnt && sudo mkdir -p /tools/Xilinx && sudo mount -o loop Xilinx.img.tmp /tools/Xilinx && sudo chown user:users /tools/Xilinx && ./install.sh"
+	mv Xilinx.img.tmp Xilinx.img
 
 .PHONY: bash
 bash:
 	xhost +
-	$(DOCKER_CMD) \
-		bash -c "$(INIT_CMD) && bash"
+	$(DOCKER_CMD) bash -c "$(INIT_CMD) && bash"
 
 .PHONY: vivado
 vivado:
 	xhost +
-	$(DOCKER_CMD) \
-		bash -c "$(INIT_CMD) && ./start_vivado.sh"
+	$(DOCKER_CMD) bash -c "$(INIT_CMD) && ./start_vivado.sh"
 
 .PHONY: vitis
 vitis:
 	xhost +
-	$(DOCKER_CMD) \
-		bash -c "$(INIT_CMD) && ./start_vitis.sh"
+	$(DOCKER_CMD) bash -c "$(INIT_CMD) && ./start_vitis.sh"
