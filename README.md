@@ -61,7 +61,7 @@ program_ftdi -write -ftdi FT2232H -serial 0ABC01 -vendor "my vendor co" -board "
 ```
 
 ```console
-./bin/xvcd -v
+./xvcd/bin/xvcd -v
 ```
 
 In the container,
