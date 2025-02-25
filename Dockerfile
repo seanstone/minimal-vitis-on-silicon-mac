@@ -34,6 +34,7 @@ RUN apt-get install -y --no-install-recommends \
     usbutils
 
 # install iputils-ping for ping
+RUN apt-get install -y --no-install-recommends \
     iputils-ping
 
 # Set the locale, because Vivado crashes otherwise
@@ -45,6 +46,7 @@ ENV LC_ALL=en_US.UTF-8
 RUN mkdir -p /tools/Xilinx
 
 USER user
+WORKDIR /home/user
 
 # Without this, Vivado will crash when synthesizing
 ENV LD_PRELOAD="/lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libselinux.so.1 /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libgdk-3.so.0"

@@ -8,7 +8,7 @@ DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		-v .:/mnt \
 		--platform linux/amd64 $(PROJECT_NAME)
 
-INIT_CMD = cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && source /tools/Xilinx/Vitis/2024.2/settings64.sh
+INIT_CMD = sudo mount -o loop /mnt/Xilinx.img /tools/Xilinx && source /tools/Xilinx/Vitis/2024.2/settings64.sh
 
 .PHONY: docker
 docker:
