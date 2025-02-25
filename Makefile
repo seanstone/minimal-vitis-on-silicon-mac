@@ -1,51 +1,43 @@
 PROJECT_NAME = minimal-vitis-on-silicon-mac
 
+DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
+		-e DISPLAY=host.docker.internal:0 \
+		-e LD_PRELOAD="/lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libselinux.so.1 /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libgdk-3.so.0" \
+		-e JAVA_TOOL_OPTIONS="-Dsun.java2d.xrender=false" \
+		-e JAVA_OPTS="-Dsun.java2d.xrender=false" \
+		-v .:/mnt \
+		--platform linux/amd64 $(PROJECT_NAME)
+
+INIT_CMD = cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx
+
 .PHONY: docker
 docker:
 	docker build -t $(PROJECT_NAME) .
 
 Xilinx.img.tmp:
 	truncate -s 120G Xilinx.img
-	docker run --init --rm -it --privileged --pid=host \
-		-e DISPLAY=host.docker.internal:0 \
-		-v .:/mnt \
-		--platform linux/amd64 $(PROJECT_NAME) \
-		sudo -H -u user bash -c "cd /mnt && mkfs.ext4 Xilinx.img.tmp"
+	$(DOCKER_CMD) \
+		bash -c "cd /mnt && mkfs.ext4 Xilinx.img.tmp"
 
 Xilinx.img: Xilinx.img.tmp
-	docker run --init --rm -it --privileged --pid=host \
-		-e DISPLAY=host.docker.internal:0 \
-		-v .:/mnt \
-		--platform linux/amd64 $(PROJECT_NAME) \
-		sudo -H -u user bash -c "cd /mnt && sudo mkdir -p /tools/Xilinx && sudo mount -o loop Xilinx.img.tmp /tools/Xilinx && sudo chown user:users /tools/Xilinx && ./install.sh"
+	$(DOCKER_CMD) \
+		bash -c "cd /mnt && sudo mkdir -p /tools/Xilinx && sudo mount -o loop Xilinx.img.tmp /tools/Xilinx && sudo chown user:users /tools/Xilinx && ./install.sh"
 		mv Xilinx.img.tmp Xilinx.img
 
 .PHONY: bash
 bash:
 	xhost +
-	docker run --init --rm -it --privileged --pid=host \
-		-e DISPLAY=host.docker.internal:0 \
-		-v .:/mnt \
-		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		--platform linux/amd64 $(PROJECT_NAME) \
-		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && bash"
+	$(DOCKER_CMD) \
+		bash -c "$(INIT_CMD) && bash"
 
 .PHONY: vivado
 vivado:
 	xhost +
-	docker run --init --rm -it --privileged --pid=host \
-		-e DISPLAY=host.docker.internal:0 \
-		-v .:/mnt \
-		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		--platform linux/amd64 $(PROJECT_NAME) \
-		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && ./start_vivado.sh"
+	$(DOCKER_CMD) \
+		bash -c "$(INIT_CMD) && ./start_vivado.sh"
 
 .PHONY: vitis
 vitis:
 	xhost +
-	docker run --init --rm -it --privileged --pid=host \
-		-e DISPLAY=host.docker.internal:0 \
-		-v .:/mnt\
-		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		--platform linux/amd64 $(PROJECT_NAME) \
-		sudo -H -u user bash -c "cd /mnt && sudo mount -o loop Xilinx.img /tools/Xilinx && ./start_vitis.sh"
+	$(DOCKER_CMD) \
+		bash -c "$(INIT_CMD) && ./start_vitis.sh"
