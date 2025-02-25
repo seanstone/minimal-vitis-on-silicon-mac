@@ -3,3 +3,5 @@
 *.tmp
 _ide/
 .Xil/
+*.jou
+*.log
