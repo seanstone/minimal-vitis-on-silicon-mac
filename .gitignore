@@ -2,3 +2,4 @@
 *.img
 *.tmp
 _ide/
+.Xil/
