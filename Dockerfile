@@ -1,5 +1,5 @@
 FROM --platform=linux/amd64 ubuntu:22.04
-RUN apt update && apt upgrade -y && apt upgrade -y
+RUN apt update && apt upgrade -y
 
 # create user "user" with password "pass"
 RUN useradd --create-home --shell /bin/bash --user-group --groups adm,sudo user
