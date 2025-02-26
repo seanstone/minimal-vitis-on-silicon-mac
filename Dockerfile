@@ -6,36 +6,25 @@ RUN useradd --create-home --shell /bin/bash --user-group --groups adm,sudo user
 RUN sh -c 'echo "user:pass" | chpasswd'
 
 # sudo
-RUN apt install -y --no-install-recommends sudo
+RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # dependencies for Vivado
-RUN apt install -y --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     python3-pip python3-dev build-essential git gcc-multilib g++ \
     ocl-icd-opencl-dev libjpeg62-dev libc6-dev-i386 graphviz make \
     unzip libtinfo5 xvfb libncursesw5 locales libswt-gtk-4-jni
 
-# install dependencies for Vitis
-RUN apt-get install -y --no-install-recommends \
+# dependencies for Vitis
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     libnss3 libasound2 libsecret-1-0 \
     libxtst6 file \
-    libgtk2.0-0 libswt-gtk-4-java xorg
-
-# install x11-utils for xlsclients
-RUN apt-get install -y --no-install-recommends \
+    libgtk2.0-0 libswt-gtk-4-java xorg \
     x11-utils
 
-# install ncdu for calculating disk space usage
-RUN apt-get install -y --no-install-recommends \
-    ncdu
-
-# install usbutils for lsusb
-RUN apt-get install -y --no-install-recommends \
-    usbutils
-
-# install iputils-ping for ping
-RUN apt-get install -y --no-install-recommends \
-    iputils-ping
+# misc utils
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    ncdu usbutils iputils-ping htop nano
 
 # Set the locale, because Vivado crashes otherwise
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
@@ -47,6 +36,3 @@ RUN mkdir -p /tools/Xilinx
 
 USER user
 WORKDIR /home/user
-
-# Without this, Vivado will crash when synthesizing
-ENV LD_PRELOAD="/lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libselinux.so.1 /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libgdk-3.so.0"

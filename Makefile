@@ -88,6 +88,7 @@ vivado:
 	xhost +
 	$(DOCKER_CMD) bash -c "$(INIT_CMD) && vivado"
 
+# If this does not work, start Vitis by running bash first, then run vitis
 .PHONY: vitis
 vitis:
 	xhost +
