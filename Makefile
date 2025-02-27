@@ -80,6 +80,14 @@ Xilinx.img: Xilinx.img.tmp
 	$(DOCKER_CMD) bash -c "sudo mkdir -p /tools/Xilinx && sudo mount -o loop $(IMAGE_DIR)/Xilinx.img.tmp /tools/Xilinx && sudo chown user:users /tools/Xilinx && (cd $(IMAGE_DIR) && ./install.sh)"
 	mv Xilinx.img.tmp Xilinx.img
 
+.PHONY: vitis-fix
+vitis-fix:
+	$(DOCKER_CMD) bash -c "$(INIT_CMD) && cd /tools/Xilinx/Vitis/2024.2/lib/lnx64.o/Ubuntu/ \
+		&& sudo mv libstdc++.so libstdc++.so.bkup \
+		&& sudo mv libstdc++.so.6 libstdc++.so.6.bkup \
+		&& sudo ln -s /lib/x86_64-linux-gnu/libstdc++.so.6 libstdc++.so.6 \
+		&& sudo ln -s /lib/x86_64-linux-gnu/libstdc++.so.6 libstdc++.so \
+		"
 .PHONY: bash
 bash:
 	xhost +

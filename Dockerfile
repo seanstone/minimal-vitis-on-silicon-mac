@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ubuntu:22.04
+FROM --platform=linux/amd64 ubuntu:24.04
 RUN apt update && apt upgrade -y
 
 # create user "user" with password "pass"
@@ -13,14 +13,14 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     python3-pip python3-dev build-essential git gcc-multilib g++ \
     ocl-icd-opencl-dev libjpeg62-dev libc6-dev-i386 graphviz make \
-    unzip libtinfo5 xvfb libncursesw5 locales libswt-gtk-4-jni
+    unzip libtinfo6 xvfb libncursesw6 locales libswt-gtk-4-jni
 
 # dependencies for Vitis
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    libnss3 libasound2 libsecret-1-0 \
+    libnss3 libasound2t64 libsecret-1-0 \
     libxtst6 file \
     libgtk2.0-0 libswt-gtk-4-java xorg \
-    x11-utils
+    x11-utils libpcre3
 
 # misc utils
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
