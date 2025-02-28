@@ -17,7 +17,7 @@ make Xilinx.img
 ```
 
 4. Modify vitis script (bin/vitis):
-```
+```bash
 --gui|-g)
       # $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug ${analyzeArgs[@]} > /dev/null 2>&1 &
       $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug ${analyzeArgs[@]}
@@ -92,3 +92,5 @@ hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:2542" &
 * https://github.com/ichi4096/vivado-on-silicon-mac/issues/52
 * https://adaptivesupport.amd.com/s/question/0D54U000091FX0XSAW/vitis-no-longer-opening-ubuntu-2404-vitis-20242?language=en_US
 * https://www.hackster.io/whitney-knitter/fix-for-vitis-unified-2023-2-launching-into-blank-screen-4ab565
+* https://github.com/electron/electron/issues/10345
+* https://stackoverflow.com/questions/42898262/run-dbus-daemon-inside-docker-container
