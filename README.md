@@ -74,11 +74,6 @@ program_ftdi -write -ftdi FT2232H -serial 0ABC01 -vendor "my vendor co" -board "
 ```
 
 In the container,
-
-```console
-source /tools/Xilinx/Vivado/2024.2/settings64.sh
-```
-
 ```console
 hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:2542" &
 ```
