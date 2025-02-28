@@ -82,3 +82,4 @@ hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:2542" &
 * https://docs.docker.com/desktop/features/usbip/
 * https://github.com/ichi4096/vivado-on-silicon-mac/issues/52
 * https://adaptivesupport.amd.com/s/question/0D54U000091FX0XSAW/vitis-no-longer-opening-ubuntu-2404-vitis-20242?language=en_US
+* https://www.hackster.io/whitney-knitter/fix-for-vitis-unified-2023-2-launching-into-blank-screen-4ab565
