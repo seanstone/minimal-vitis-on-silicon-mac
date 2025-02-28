@@ -22,6 +22,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     libgtk2.0-0 libswt-gtk-4-java xorg \
     x11-utils libpcre3
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    xdg-utils
+
 # misc utils
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ncdu usbutils iputils-ping htop nano

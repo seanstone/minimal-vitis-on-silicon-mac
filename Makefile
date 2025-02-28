@@ -63,10 +63,11 @@ DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		-e LD_PRELOAD="$(LD_PRELOAD)" \
 		-e JAVA_TOOL_OPTIONS="-Dsun.java2d.xrender=false" \
 		-e JAVA_OPTS="-Dsun.java2d.xrender=false" \
+		-e DBUS_SESSION_BUS_ADDRESS="unix:path=/var/run/dbus/system_bus_socket" \
 		-v .:$(MOUNT_DIR) \
 		--platform linux/amd64 minimal-vitis-on-silicon-mac
 
-INIT_CMD = sudo mount -o loop $(IMAGE_DIR)/Xilinx.img /tools/Xilinx && source /tools/Xilinx/Vitis/2024.2/settings64.sh
+INIT_CMD = sudo mount -o loop $(IMAGE_DIR)/Xilinx.img /tools/Xilinx && source /tools/Xilinx/Vitis/2024.2/settings64.sh && sudo dbus-daemon --config-file=/usr/share/dbus-1/system.conf
 
 .PHONY: docker
 docker:
