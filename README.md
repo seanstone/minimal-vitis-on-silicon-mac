@@ -93,3 +93,4 @@ hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:2542" &
 * https://adaptivesupport.amd.com/s/question/0D54U000091FX0XSAW/vitis-no-longer-opening-ubuntu-2404-vitis-20242?language=en_US
 * https://www.hackster.io/whitney-knitter/fix-for-vitis-unified-2023-2-launching-into-blank-screen-4ab565
 * https://github.com/electron/electron/issues/10345
+* https://stackoverflow.com/questions/42898262/run-dbus-daemon-inside-docker-container
