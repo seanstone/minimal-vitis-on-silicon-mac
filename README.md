@@ -16,6 +16,15 @@ make docker
 make Xilinx.img
 ```
 
+4. Modify vitis script (bin/vitis):
+```
+--gui|-g)
+      # $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug ${analyzeArgs[@]} > /dev/null 2>&1 &
+      $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug ${analyzeArgs[@]}
+      exit $?
+      ;;
+```
+
 ## USB/IP
 
 Install Docker Desktop >= 4.35.0
