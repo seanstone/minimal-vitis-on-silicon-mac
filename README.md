@@ -17,7 +17,7 @@ make Xilinx.img
 ```
 
 4. Modify vitis script (bin/vitis):
-```
+```bash
 --gui|-g)
       # $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug ${analyzeArgs[@]} > /dev/null 2>&1 &
       $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug ${analyzeArgs[@]}
