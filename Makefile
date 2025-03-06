@@ -2,7 +2,6 @@ OS := $(shell uname)
 ifeq ($(OS),Darwin)
 
 CURRENT_MAKEFILE_DIR := $(CURDIR)/$(dir $(lastword $(MAKEFILE_LIST)))
-$(info $(dir $(lastword $(MAKEFILE_LIST))))
 
 LD_PRELOAD += /lib/x86_64-linux-gnu/libudev.so.1
 LD_PRELOAD += /lib/x86_64-linux-gnu/libselinux.so.1
@@ -112,5 +111,9 @@ vivado:
 vitis:
 	xhost +
 	$(DOCKER_CMD) bash -c "$(INIT_CMD) && vitis"
+
+%:
+	xhost +
+	$(DOCKER_CMD) bash -c "$(INIT_CMD) && make $*"
 
 endif
