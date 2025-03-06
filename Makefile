@@ -1,5 +1,8 @@
-MOUNT_DIR := /home/user/$(shell basename $(CURDIR))
-IMAGE_DIR := $(MOUNT_DIR)
+OS := $(shell uname)
+ifeq ($(OS),Darwin)
+
+CURRENT_MAKEFILE_DIR := $(CURDIR)/$(dir $(lastword $(MAKEFILE_LIST)))
+$(info $(dir $(lastword $(MAKEFILE_LIST))))
 
 LD_PRELOAD += /lib/x86_64-linux-gnu/libudev.so.1
 LD_PRELOAD += /lib/x86_64-linux-gnu/libselinux.so.1
@@ -64,22 +67,27 @@ DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		-e JAVA_TOOL_OPTIONS="-Dsun.java2d.xrender=false" \
 		-e JAVA_OPTS="-Dsun.java2d.xrender=false" \
 		-e DBUS_SESSION_BUS_ADDRESS="unix:path=/var/run/dbus/system_bus_socket" \
-		-v .:$(MOUNT_DIR) \
+		-v $(CURRENT_MAKEFILE_DIR)/Xilinx.img:/Xilinx.img \
+		-v $(CURDIR):/home/user/$(shell basename $(CURDIR)) \
 		--platform linux/amd64 minimal-vitis-on-silicon-mac
 
-INIT_CMD = sudo mount -o loop $(IMAGE_DIR)/Xilinx.img /tools/Xilinx && source /tools/Xilinx/Vitis/2024.2/settings64.sh && sudo dbus-daemon --config-file=/usr/share/dbus-1/system.conf
+INIT_CMD = sudo mount -o loop /Xilinx.img /tools/Xilinx \
+	&& source /tools/Xilinx/Vitis/2024.2/settings64.sh \
+	&& sudo dbus-daemon --config-file=/usr/share/dbus-1/system.conf \
+	&& cd /home/user/$(shell basename $(CURDIR))
+
+ifeq ($(dir $(lastword $(MAKEFILE_LIST))),./)
 
 .PHONY: docker
 docker:
 	docker build -t minimal-vitis-on-silicon-mac .
 
-Xilinx.img.tmp:
+Xilinx.img:
 	truncate -s 120G Xilinx.img
-	$(DOCKER_CMD) bash -c "mkfs.ext4 $(IMAGE_DIR)/Xilinx.img.tmp"
+	$(DOCKER_CMD) bash -c "mkfs.ext4 /Xilinx.img"
+	$(DOCKER_CMD) bash -c "sudo mkdir -p /tools/Xilinx && sudo mount -o loop /Xilinx.img /tools/Xilinx && sudo chown user:users /tools/Xilinx && (cd $(IMAGE_DIR) && ./install.sh)"
 
-Xilinx.img: Xilinx.img.tmp
-	$(DOCKER_CMD) bash -c "sudo mkdir -p /tools/Xilinx && sudo mount -o loop $(IMAGE_DIR)/Xilinx.img.tmp /tools/Xilinx && sudo chown user:users /tools/Xilinx && (cd $(IMAGE_DIR) && ./install.sh)"
-	mv Xilinx.img.tmp Xilinx.img
+endif
 
 .PHONY: vitis-fix
 vitis-fix:
@@ -104,3 +112,5 @@ vivado:
 vitis:
 	xhost +
 	$(DOCKER_CMD) bash -c "$(INIT_CMD) && vitis"
+
+endif
