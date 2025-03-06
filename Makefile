@@ -78,17 +78,22 @@ INIT_CMD = sudo mount -o loop /Xilinx.img /tools/Xilinx \
 	&& start-hw-server.sh
 
 ifeq ($(dir $(lastword $(MAKEFILE_LIST))),./)
-
-.PHONY: docker
-docker:
-	docker build -t minimal-vitis-on-silicon-mac .
-
 Xilinx.img:
 	truncate -s 120G Xilinx.img
 	$(DOCKER_CMD) bash -c "mkfs.ext4 /Xilinx.img"
 	$(DOCKER_CMD) bash -c "sudo mkdir -p /tools/Xilinx && sudo mount -o loop /Xilinx.img /tools/Xilinx && sudo chown user:users /tools/Xilinx && (cd $(IMAGE_DIR) && ./install.sh)"
-
 endif
+
+.PHONY: docker
+docker:
+	docker build -t minimal-vitis-on-silicon-mac $(CURRENT_MAKEFILE_DIR)
+
+.PHONY: xvcd
+xvcd: $(CURRENT_MAKEFILE_DIR)/xvcd/bin/xvcd
+	$(CURRENT_MAKEFILE_DIR)/xvcd/bin/xvcd -v
+
+$(CURRENT_MAKEFILE_DIR)/xvcd/bin/xvcd:
+	$(MAKE) -C $(CURRENT_MAKEFILE_DIR)/xvcd
 
 .PHONY: vitis-fix
 vitis-fix:
@@ -98,6 +103,7 @@ vitis-fix:
 		&& sudo ln -s /lib/x86_64-linux-gnu/libstdc++.so.6 libstdc++.so.6 \
 		&& sudo ln -s /lib/x86_64-linux-gnu/libstdc++.so.6 libstdc++.so \
 		"
+
 .PHONY: bash
 bash:
 	xhost +
