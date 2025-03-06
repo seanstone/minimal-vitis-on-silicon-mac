@@ -67,13 +67,15 @@ DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		-e JAVA_OPTS="-Dsun.java2d.xrender=false" \
 		-e DBUS_SESSION_BUS_ADDRESS="unix:path=/var/run/dbus/system_bus_socket" \
 		-v $(CURRENT_MAKEFILE_DIR)/Xilinx.img:/Xilinx.img \
+		-v $(CURRENT_MAKEFILE_DIR)/start-hw-server.sh:/usr/bin/start-hw-server.sh \
 		-v $(CURDIR):/home/user/$(shell basename $(CURDIR)) \
 		--platform linux/amd64 minimal-vitis-on-silicon-mac
 
 INIT_CMD = sudo mount -o loop /Xilinx.img /tools/Xilinx \
 	&& source /tools/Xilinx/Vitis/2024.2/settings64.sh \
 	&& sudo dbus-daemon --config-file=/usr/share/dbus-1/system.conf \
-	&& cd /home/user/$(shell basename $(CURDIR))
+	&& cd /home/user/$(shell basename $(CURDIR)) \
+	&& start-hw-server.sh
 
 ifeq ($(dir $(lastword $(MAKEFILE_LIST))),./)
 

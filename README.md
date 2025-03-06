@@ -73,11 +73,6 @@ program_ftdi -write -ftdi FT2232H -serial 0ABC01 -vendor "my vendor co" -board "
 ./xvcd/bin/xvcd -v
 ```
 
-In the container,
-```console
-hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:2542" &
-```
-
 ## References
 
 * https://github.com/ichi4096/vivado-on-silicon-mac
