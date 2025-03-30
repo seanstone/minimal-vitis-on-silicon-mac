@@ -29,6 +29,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ncdu usbutils iputils-ping htop nano
 
+# misc utils
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    bison flex libncurses-dev
+
 # Set the locale, because Vivado crashes otherwise
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 ENV LANG=en_US.UTF-8
