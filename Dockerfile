@@ -41,6 +41,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     libssl-dev uuid-dev libgnutls28-dev
 
+# dependencies for genimage
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    mtools
+
 # Set the locale, because Vivado crashes otherwise
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 ENV LANG=en_US.UTF-8
