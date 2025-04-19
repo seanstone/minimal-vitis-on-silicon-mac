@@ -33,6 +33,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     bison flex libncurses-dev
 
+# dependencies for buildroot
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    wget cpio rsync bc
+
 # Set the locale, because Vivado crashes otherwise
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 ENV LANG=en_US.UTF-8
