@@ -43,3 +43,5 @@ RUN mkdir -p /tools/Xilinx
 
 USER user
 WORKDIR /home/user
+
+RUN mkdir -p /home/user/images

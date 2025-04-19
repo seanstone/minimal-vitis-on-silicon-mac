@@ -60,7 +60,7 @@ LD_PRELOAD += /lib/x86_64-linux-gnu/libmd.so.0
 LD_PRELOAD += /lib/x86_64-linux-gnu/libpcre.so.3
 LD_PRELOAD += /lib/x86_64-linux-gnu/libuuid.so.1
 
-DOCKER_CMD := docker run --init --rm -it --privileged --pid=host \
+DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
 		-e LD_PRELOAD="$(LD_PRELOAD)" \
 		-e JAVA_TOOL_OPTIONS="-Dsun.java2d.xrender=false" \
@@ -69,6 +69,7 @@ DOCKER_CMD := docker run --init --rm -it --privileged --pid=host \
 		-v $(CURRENT_MAKEFILE_DIR)/Xilinx.img:/Xilinx.img \
 		-v $(CURRENT_MAKEFILE_DIR)/start-hw-server.sh:/usr/bin/start-hw-server.sh \
 		-v $(CURDIR):/home/user/$(shell basename $(CURDIR)) \
+		$(DOCKER_VARS) \
 		--platform linux/amd64 minimal-vitis-on-silicon-mac
 
 INIT_CMD := sudo mount -o loop /Xilinx.img /tools/Xilinx \
