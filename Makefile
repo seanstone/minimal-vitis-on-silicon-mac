@@ -75,8 +75,7 @@ DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 INIT_CMD := sudo mount -o loop /Xilinx.img /tools/Xilinx \
 	&& source /tools/Xilinx/Vitis/2024.2/settings64.sh \
 	&& sudo dbus-daemon --config-file=/usr/share/dbus-1/system.conf \
-	&& cd /home/user/$(shell basename $(CURDIR)) \
-	&& start-hw-server.sh
+	&& cd /home/user/$(shell basename $(CURDIR))
 
 ifeq ($(dir $(lastword $(MAKEFILE_LIST))),./)
 Xilinx.img:
