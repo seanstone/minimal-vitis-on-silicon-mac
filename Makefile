@@ -60,6 +60,8 @@ LD_PRELOAD += /lib/x86_64-linux-gnu/libmd.so.0
 LD_PRELOAD += /lib/x86_64-linux-gnu/libpcre.so.3
 LD_PRELOAD += /lib/x86_64-linux-gnu/libuuid.so.1
 
+export VERSION := 2024.2
+
 DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
 		-e LD_PRELOAD="$(LD_PRELOAD)" \
@@ -73,11 +75,9 @@ DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		--platform linux/amd64 minimal-vitis-on-silicon-mac
 
 INIT_CMD := sudo mount -o loop /Xilinx.img /tools/Xilinx \
-	&& source /tools/Xilinx/Vitis/2024.2/settings64.sh \
+	&& source /tools/Xilinx/Vitis/$(VERSION)/settings64.sh \
 	&& sudo dbus-daemon --config-file=/usr/share/dbus-1/system.conf \
 	&& cd /home/user/$(shell basename $(CURDIR))
-
-export VERSION := 2024.2
 
 ifeq ($(dir $(lastword $(MAKEFILE_LIST))),./)
 Xilinx.img:
@@ -99,7 +99,7 @@ $(CURRENT_MAKEFILE_DIR)/xvcd/bin/xvcd:
 
 .PHONY: vitis-fix
 vitis-fix:
-	$(DOCKER_CMD) bash -c "$(INIT_CMD) && cd /tools/Xilinx/Vitis/2024.2/lib/lnx64.o/Ubuntu/ \
+	$(DOCKER_CMD) bash -c "$(INIT_CMD) && cd /tools/Xilinx/Vitis/$(VERSION)/lib/lnx64.o/Ubuntu/ \
 		&& sudo mv libstdc++.so libstdc++.so.bkup \
 		&& sudo mv libstdc++.so.6 libstdc++.so.6.bkup \
 		&& sudo ln -s /lib/x86_64-linux-gnu/libstdc++.so.6 libstdc++.so.6 \
