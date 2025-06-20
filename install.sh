@@ -7,8 +7,8 @@ function f_echo {
 
 # Extract installer
 f_echo "Extracting installer"
-chmod +x ./*.bin
-./*.bin --target ./installer --noexec
+chmod +x ./*${VERSION}*.bin
+./*${VERSION}*.bin --target ./installer --noexec
 
 # Get AuthToken by repeating the following command until it succeeds
 f_echo "Log into your Xilinx account to download the necessary files."
