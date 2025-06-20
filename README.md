@@ -25,9 +25,11 @@ make Xilinx.img
       ;;
 ```
 
-## USB/IP
+## Program the ob-board FTDI chip using USB/IP
 
 Install Docker Desktop >= 4.35.0
+
+Then,
 
 ```console
 pip install libusb1
