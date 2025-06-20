@@ -55,7 +55,7 @@ make vivado
 make vitis
 ```
 
-### Program the on-board FTDI chip using USB/IP
+### Program the on-board FTDI chip
 
 Install Docker Desktop >= 4.35.0
 
