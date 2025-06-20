@@ -17,15 +17,7 @@ make docker
 ```console
 make Xilinx.img
 ```
-
-4. Modify vitis script (bin/vitis):
-```bash
---gui|-g)
-      # $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug ${analyzeArgs[@]} > /dev/null 2>&1 &
-      $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug --disable-gpu --disable-software-rasterizer ${analyzeArgs[@]}
-      exit $?
-      ;;
-```
+If this step is interrupted or fails, remove `Xilinx.img` and try again.
 
 ### Build xvcd
 
@@ -100,10 +92,28 @@ program_ftdi -write -ftdi FT2232H -serial 0ABC01 -vendor "my vendor co" -board "
 ## References
 
 * https://github.com/ichi4096/vivado-on-silicon-mac
-* https://github.com/ichi4096/vivado-on-silicon-mac/issues/37
-* https://www.reddit.com/r/FPGA/comments/z2gqk2/vitis_hls_closing_immediately/
 * https://docs.docker.com/desktop/features/usbip/
 * https://github.com/ichi4096/vivado-on-silicon-mac/issues/52
+
+---
+
+## Issues
+
+### Vitis may hang while using
+
+Attempt to fix (does not work).
+
+Modify vitis script (bin/vitis):
+```bash
+--gui|-g)
+      # $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug ${analyzeArgs[@]} > /dev/null 2>&1 &
+      $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug --disable-gpu --disable-software-rasterizer ${analyzeArgs[@]}
+      exit $?
+      ;;
+```
+
+* https://github.com/ichi4096/vivado-on-silicon-mac/issues/37
+* https://www.reddit.com/r/FPGA/comments/z2gqk2/vitis_hls_closing_immediately/
 * https://adaptivesupport.amd.com/s/question/0D54U000091FX0XSAW/vitis-no-longer-opening-ubuntu-2404-vitis-20242?language=en_US
 * https://www.hackster.io/whitney-knitter/fix-for-vitis-unified-2023-2-launching-into-blank-screen-4ab565
 * https://github.com/electron/electron/issues/10345
