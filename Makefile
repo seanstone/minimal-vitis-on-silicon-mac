@@ -77,11 +77,13 @@ INIT_CMD := sudo mount -o loop /Xilinx.img /tools/Xilinx \
 	&& sudo dbus-daemon --config-file=/usr/share/dbus-1/system.conf \
 	&& cd /home/user/$(shell basename $(CURDIR))
 
+export VERSION := 2024.2
+
 ifeq ($(dir $(lastword $(MAKEFILE_LIST))),./)
 Xilinx.img:
 	truncate -s 120G Xilinx.img
 	$(DOCKER_CMD) bash -c "mkfs.ext4 /Xilinx.img"
-	$(DOCKER_CMD) bash -c "sudo mkdir -p /tools/Xilinx && sudo mount -o loop /Xilinx.img /tools/Xilinx && sudo chown user:users /tools/Xilinx && (cd /home/user/$(shell basename $(CURDIR)) && ./install_202402.sh)"
+	$(DOCKER_CMD) bash -c "sudo mkdir -p /tools/Xilinx && sudo mount -o loop /Xilinx.img /tools/Xilinx && sudo chown user:users /tools/Xilinx && (cd /home/user/$(shell basename $(CURDIR)) && ./install.sh)"
 endif
 
 .PHONY: docker
