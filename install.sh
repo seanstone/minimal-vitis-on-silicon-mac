@@ -1,5 +1,7 @@
 #!/bin/bash
 
+: "${VERSION:=2024.2}"
+
 # echo with color
 function f_echo {
 	echo -e "\e[1m\e[33m$1\e[0m"
