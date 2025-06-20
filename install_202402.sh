@@ -22,4 +22,4 @@ done
 f_echo "You successfully logged into your account. The installation will begin now."
 f_echo "If a window pops up, simply close it to finish the installation."
 # /home/user/installer/xsetup -b ConfigGen
-/home/user/installer/xsetup -c ./install_config.txt -b Install -a XilinxEULA,3rdPartyEULA
+/home/user/installer/xsetup -c ./install_config_202402.txt -b Install -a XilinxEULA,3rdPartyEULA
