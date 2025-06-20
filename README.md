@@ -25,7 +25,7 @@ make Xilinx.img
       ;;
 ```
 
-## Program the ob-board FTDI chip using USB/IP
+## Program the on-board FTDI chip using USB/IP
 
 Install Docker Desktop >= 4.35.0
 
