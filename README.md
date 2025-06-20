@@ -2,7 +2,9 @@
 
 Adapted from https://github.com/ichi4096/vivado-on-silicon-mac
 
-## Install Vitis
+## Setup
+
+### Install Vitis
 
 1. Build Docker image:
 ```console
@@ -25,7 +27,35 @@ make Xilinx.img
       ;;
 ```
 
-## Program the on-board FTDI chip using USB/IP
+### Build xvcd
+
+```console
+(cd xvcd && make)
+```
+
+---
+
+## Usage
+
+### Launch xvcd for JTAG over FTDI
+
+```console
+./xvcd/bin/xvcd -v
+```
+
+### Launch Vivado
+
+```console
+make vivado
+```
+
+### Launch Vitis
+
+```console
+make vitis
+```
+
+### Program the on-board FTDI chip using USB/IP
 
 Install Docker Desktop >= 4.35.0
 
@@ -65,15 +95,7 @@ exit
 program_ftdi -write -ftdi FT2232H -serial 0ABC01 -vendor "my vendor co" -board "my board" -desc "my product desc"
 ```
 
-## xvcd
-
-```console
-(cd xvcd && make)
-```
-
-```console
-./xvcd/bin/xvcd -v
-```
+---
 
 ## References
 
