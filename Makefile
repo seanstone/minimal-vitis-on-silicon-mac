@@ -60,7 +60,7 @@ LD_PRELOAD += /lib/x86_64-linux-gnu/libmd.so.0
 LD_PRELOAD += /lib/x86_64-linux-gnu/libpcre.so.3
 LD_PRELOAD += /lib/x86_64-linux-gnu/libuuid.so.1
 
-export VERSION ?= 2024.2
+export VERSION ?= 2025.1
 
 DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
