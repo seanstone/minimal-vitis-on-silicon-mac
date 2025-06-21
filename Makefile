@@ -75,7 +75,7 @@ DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		--platform linux/amd64 minimal-vitis-on-silicon-mac
 
 INIT_CMD := sudo mount -o loop /Xilinx.img /tools/Xilinx \
-	&& source /tools/Xilinx/Vitis/$(VERSION)/settings64.sh \
+	&& source /tools/Xilinx/$(VERSION)/Vitis/settings64.sh \
 	&& sudo dbus-daemon --config-file=/usr/share/dbus-1/system.conf \
 	&& cd /home/user/$(shell basename $(CURDIR))
 
@@ -99,7 +99,7 @@ $(CURRENT_MAKEFILE_DIR)/xvcd/bin/xvcd:
 
 .PHONY: vitis-fix
 vitis-fix:
-	$(DOCKER_CMD) bash -c "$(INIT_CMD) && cd /tools/Xilinx/Vitis/$(VERSION)/lib/lnx64.o/Ubuntu/ \
+	$(DOCKER_CMD) bash -c "$(INIT_CMD) && cd /tools/Xilinx/$(VERSION)/Vitis/lib/lnx64.o/Ubuntu/ \
 		&& sudo mv libstdc++.so libstdc++.so.bkup \
 		&& sudo mv libstdc++.so.6 libstdc++.so.6.bkup \
 		&& sudo ln -s /lib/x86_64-linux-gnu/libstdc++.so.6 libstdc++.so.6 \
