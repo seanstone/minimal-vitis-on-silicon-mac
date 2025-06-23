@@ -75,6 +75,7 @@ DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		-e JAVA_TOOL_OPTIONS="-Dsun.java2d.xrender=false" \
 		-e JAVA_OPTS="-Dsun.java2d.xrender=false" \
 		-e DBUS_SESSION_BUS_ADDRESS="unix:path=/var/run/dbus/system_bus_socket" \
+		-e VERSION="${VERSION}" \
 		-v $(CURRENT_MAKEFILE_DIR)/Xilinx.img:/Xilinx.img \
 		-v $(CURRENT_MAKEFILE_DIR)/start-hw-server.sh:/usr/bin/start-hw-server.sh \
 		-v $(CURDIR):/home/user/$(shell basename $(CURDIR)) \
