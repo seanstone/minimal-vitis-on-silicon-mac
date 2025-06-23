@@ -103,13 +103,10 @@ program_ftdi -write -ftdi FT2232H -serial 0ABC01 -vendor "my vendor co" -board "
 
 Attempt to fix (does not work).
 
-Modify vitis script (bin/vitis):
+Modify vitis script (`/tools/Xilinx/2025.1/Vitis/bin/vitis`):
 ```bash
---gui|-g)
-      # $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug ${analyzeArgs[@]} > /dev/null 2>&1 &
-      $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug --disable-gpu --disable-software-rasterizer ${analyzeArgs[@]}
-      exit $?
-      ;;
+# $XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug $workspace_path ${analyzeArgs[@]} > /dev/null 2>&1 &
+$XILINX_VITIS/ide/electron-app/lnx64/vitis-ide --no-sandbox --log-level=debug --disable-gpu --disable-software-rasterizer $workspace_path ${analyzeArgs[@]}
 ```
 
 * https://github.com/ichi4096/vivado-on-silicon-mac/issues/37
