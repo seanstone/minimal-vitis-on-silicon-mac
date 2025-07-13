@@ -11,7 +11,7 @@ Adapted from https://github.com/ichi4096/vivado-on-silicon-mac
 make docker
 ```
 
-2. Download [Vitis installer 2025.1](https://www.xilinx.com/member/forms/download/xef.html?filename=FPGAs_AdaptiveSoCs_Unified_SDI_2025.1_0530_0145_Lin64.bin)
+2. Download [Vitis installer 2025.1](https://www.xilinx.com/member/forms/download/xef.html?filename=FPGAs_AdaptiveSoCs_Unified_SDI_2025.1_0530_0145_Lin64.bin) or [Vitis installer 2024.2](https://www.xilinx.com/member/forms/download/xef.html?filename=FPGAs_AdaptiveSoCs_Unified_2024.2_1113_1001_Lin64.bin)
 
 3. Install Vitis:
 ```console
