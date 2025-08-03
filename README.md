@@ -12,7 +12,9 @@ git submodule update --init
 
 ### Install Docker
 
-Open Docker:
+1. [Install Docker Desktop on Mac](https://docs.docker.com/desktop/setup/install/mac-install/)
+
+2. Open Docker:
 ```console
 open -a docker
 ```
