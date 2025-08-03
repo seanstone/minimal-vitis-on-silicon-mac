@@ -4,6 +4,13 @@ Adapted from https://github.com/ichi4096/vivado-on-silicon-mac
 
 ## Setup
 
+### Install Docker
+
+Open Docker:
+```console
+open -a docker
+```
+
 ### Install Vitis
 
 1. Build Docker image:
