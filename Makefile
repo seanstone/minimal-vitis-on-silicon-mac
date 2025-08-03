@@ -60,7 +60,7 @@ LD_PRELOAD += /lib/x86_64-linux-gnu/libmd.so.0
 LD_PRELOAD += /lib/x86_64-linux-gnu/libpcre.so.3
 LD_PRELOAD += /lib/x86_64-linux-gnu/libuuid.so.1
 
-export VERSION ?= 2025.1
+export VERSION ?= 2024.2
 
 MAJOR_VERSION := $(word 1,$(subst ., ,$(VERSION)))
 ifeq ($(shell test $(MAJOR_VERSION) -ge 2025; echo $$?),0)
