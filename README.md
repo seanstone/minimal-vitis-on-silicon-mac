@@ -4,6 +4,12 @@ Adapted from https://github.com/ichi4096/vivado-on-silicon-mac
 
 ## Setup
 
+### git submodules
+
+```
+git submodule update --init
+```
+
 ### Install Docker
 
 Open Docker:
