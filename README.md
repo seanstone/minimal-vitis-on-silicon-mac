@@ -6,7 +6,7 @@ Adapted from https://github.com/ichi4096/vivado-on-silicon-mac
 
 ### git submodules
 
-```
+```console
 git submodule update --init
 ```
 
