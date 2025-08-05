@@ -37,6 +37,10 @@ If this step is interrupted or fails, remove `Xilinx.img` and try again.
 ### Build xvcd
 
 ```console
+brew install libftdi
+```
+
+```console
 (cd xvcd && make)
 ```
 
