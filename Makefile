@@ -96,7 +96,7 @@ endif
 
 .PHONY: docker
 docker:
-	docker build -t minimal-vitis-on-silicon-mac $(CURRENT_MAKEFILE_DIR)
+	docker build --platform=linux/amd64 -t minimal-vitis-on-silicon-mac $(CURRENT_MAKEFILE_DIR)
 
 .PHONY: xvcd
 xvcd: $(CURRENT_MAKEFILE_DIR)/xvcd/bin/xvcd
