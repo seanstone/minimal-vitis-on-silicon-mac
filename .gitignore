@@ -6,3 +6,5 @@ _ide/
 *.jou
 *.log
 installer/
+
+.DS_Store
