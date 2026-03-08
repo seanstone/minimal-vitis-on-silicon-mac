@@ -5,6 +5,7 @@ _ide/
 .Xil/
 *.jou
 *.log
+*.str
 installer/
 
 .DS_Store
