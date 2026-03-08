@@ -30,7 +30,7 @@ make docker
 
 3. Install Vitis:
 ```console
-make VERSION=2024.2 Xilinx.img
+make VERSION=2025.2 Xilinx.img
 ```
 If this step is interrupted or fails, remove `Xilinx.img` and try again.
 
@@ -57,13 +57,13 @@ brew install libftdi
 ### Launch Vivado
 
 ```console
-make VERSION=2024.2 vivado
+make VERSION=2025.2 vivado
 ```
 
 ### Launch Vitis
 
 ```console
-make VERSION=2024.2 vitis
+make VERSION=2025.2 vitis
 ```
 
 ### Program the on-board FTDI chip

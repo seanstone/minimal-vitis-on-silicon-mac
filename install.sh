@@ -1,6 +1,6 @@
 #!/bin/bash
 
-: "${VERSION:=2025.1}"
+: "${VERSION:=2025.2}"
 
 # echo with color
 function f_echo {
