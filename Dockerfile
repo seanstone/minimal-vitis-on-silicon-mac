@@ -53,6 +53,14 @@ ENV LC_ALL=en_US.UTF-8
 
 RUN mkdir -p /tools/Xilinx
 
+# Replace libudev with stub to prevent segfault under Rosetta emulation.
+# Vivado's license manager dlopen()s libudev for device enumeration,
+# which crashes under x86_64 emulation on Apple Silicon.
+COPY udev_stub.c /tmp/udev_stub.c
+RUN gcc -shared -fPIC -o /tmp/libudev_stub.so /tmp/udev_stub.c \
+    && sudo cp /tmp/libudev_stub.so /usr/lib/x86_64-linux-gnu/libudev.so.1 \
+    && rm /tmp/udev_stub.c /tmp/libudev_stub.so
+
 USER user
 WORKDIR /home/user
 
