@@ -76,6 +76,6 @@ vitis:
 
 %:
 	xhost +
-	$(DOCKER_CMD) bash -c "$(INIT_CMD) && make $*"
+	$(DOCKER_CMD) bash -c "$(INIT_CMD) && make $* $(MAKEOVERRIDES)"
 
 endif
