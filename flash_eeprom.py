@@ -6,13 +6,12 @@ Usage:
     ./flash_eeprom.py ftdi_dumps/pynqz2_ftdi.bin --serial MY01 # patch serial
     ./flash_eeprom.py ftdi_dumps/pynqz2_ftdi.bin --dry-run     # show what would be written
 
-Uses PyFTDI's FtdiEeprom class (which handles Microwire EWEN/EWDS sequences)
-rather than raw USB control transfers, ensuring writes work on all boot modes.
+Writes the raw EEPROM image via Ftdi.overwrite_eeprom() (USB control transfers).
+Bypasses Xilinx program_ftdi (which requires Docker/Linux).
 """
 import argparse
 import struct
 import sys
-from pyftdi.eeprom import FtdiEeprom
 from pyftdi.ftdi import Ftdi
 
 
@@ -142,27 +141,21 @@ def main():
         print("Aborted.")
         return
 
-    # Use FtdiEeprom which handles Microwire EWEN/EWDS properly
-    eeprom = FtdiEeprom()
-    eeprom.open(args.url)
+    # Write raw image via Ftdi.overwrite_eeprom()
+    ftdi = Ftdi()
+    ftdi.open_from_url(args.url)
 
     # Read current EEPROM for comparison
-    current = eeprom.data
+    current = ftdi.read_eeprom()
     diffs = sum(1 for a, b in zip(current, data) if a != b)
     print(f"Differences from current EEPROM: {diffs} bytes")
 
-    # Load raw binary data into the eeprom object
-    eeprom._data = data  # inject raw image
-
-    print("Writing via FtdiEeprom.commit()...")
-    eeprom.commit(dry_run=False)
+    print("Writing raw EEPROM image...")
+    ftdi.overwrite_eeprom(data, dry_run=False)
 
     # Verify by re-reading
     print("Verifying...")
-    ftdi = Ftdi()
-    ftdi.open_from_url(args.url)
     verify = ftdi.read_eeprom()
-    ftdi.close()
 
     if verify == bytes(data):
         print("Verification OK — EEPROM matches.")
@@ -174,6 +167,7 @@ def main():
         for i, got, exp in mismatches[:10]:
             print(f"  0x{i:02x}: got 0x{got:02x}, expected 0x{exp:02x}")
 
+    ftdi.close()
     print("\nDone. Unplug and replug the board for the new EEPROM to take effect.")
 
 
