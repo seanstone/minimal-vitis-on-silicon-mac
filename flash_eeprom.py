@@ -6,12 +6,13 @@ Usage:
     ./flash_eeprom.py ftdi_dumps/pynqz2_ftdi.bin --serial MY01 # patch serial
     ./flash_eeprom.py ftdi_dumps/pynqz2_ftdi.bin --dry-run     # show what would be written
 
-This bypasses Xilinx program_ftdi (which requires Docker/Linux) by writing
-the raw EEPROM image directly via USB control transfers on macOS.
+Uses PyFTDI's FtdiEeprom class (which handles Microwire EWEN/EWDS sequences)
+rather than raw USB control transfers, ensuring writes work on all boot modes.
 """
 import argparse
 import struct
 import sys
+from pyftdi.eeprom import FtdiEeprom
 from pyftdi.ftdi import Ftdi
 
 
@@ -141,42 +142,38 @@ def main():
         print("Aborted.")
         return
 
-    # Open device
-    ftdi = Ftdi()
-    # Parse URL to get vid/pid
-    ftdi.open_from_url(args.url)
+    # Use FtdiEeprom which handles Microwire EWEN/EWDS properly
+    eeprom = FtdiEeprom()
+    eeprom.open(args.url)
 
     # Read current EEPROM for comparison
-    current = ftdi.read_eeprom()
+    current = eeprom.data
     diffs = sum(1 for a, b in zip(current, data) if a != b)
     print(f"Differences from current EEPROM: {diffs} bytes")
 
-    # Write word-by-word via USB control transfers
-    usb_dev = ftdi.usb_dev
-    for i in range(0, 256, 2):
-        word = struct.unpack_from('<H', data, i)[0]
-        addr = i // 2
-        usb_dev.ctrl_transfer(
-            0x40,   # bmRequestType: vendor, host-to-device
-            0x91,   # bRequest: WRITE_EEPROM
-            word,   # wValue: data word
-            addr,   # wIndex: word address
-        )
+    # Load raw binary data into the eeprom object
+    eeprom._data = data  # inject raw image
 
-    print("Write complete. Verifying...")
+    print("Writing via FtdiEeprom.commit()...")
+    eeprom.commit(dry_run=False)
 
-    # Verify
+    # Verify by re-reading
+    print("Verifying...")
+    ftdi = Ftdi()
+    ftdi.open_from_url(args.url)
     verify = ftdi.read_eeprom()
+    ftdi.close()
+
     if verify == bytes(data):
         print("Verification OK — EEPROM matches.")
     else:
         mismatches = [(i, verify[i], data[i])
-                      for i in range(256) if verify[i] != data[i]]
+                      for i in range(min(len(verify), len(data)))
+                      if verify[i] != data[i]]
         print(f"VERIFICATION FAILED — {len(mismatches)} byte(s) differ:")
         for i, got, exp in mismatches[:10]:
             print(f"  0x{i:02x}: got 0x{got:02x}, expected 0x{exp:02x}")
 
-    ftdi.close()
     print("\nDone. Unplug and replug the board for the new EEPROM to take effect.")
 
 
