@@ -4,3 +4,6 @@
 [submodule "pyusbip"]
 	path = pyusbip
 	url = https://github.com/tumayt/pyusbip
+[submodule "ftdi_dumps"]
+	path = ftdi_dumps
+	url = https://github.com/dragonlock2/ftdi_dumps.git
