@@ -60,4 +60,9 @@ RUN mkdir -p /tools/Xilinx
 USER user
 WORKDIR /home/user
 
+# Install Rust toolchain with ARM cross-compilation target
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable \
+    && . /home/user/.cargo/env && rustup target add armv7-unknown-linux-gnueabihf
+ENV PATH="/home/user/.cargo/bin:${PATH}"
+
 RUN mkdir -p /home/user/images
