@@ -69,8 +69,11 @@ else
 VITIS_DIR := /tools/Xilinx/Vitis/$(VERSION)
 endif
 
+HOST_TZ := $(shell readlink /etc/localtime 2>/dev/null | sed 's|.*/zoneinfo/||' || echo UTC)
+
 DOCKER_CMD = docker run --init --rm -it --privileged --pid=host \
 		-e DISPLAY=host.docker.internal:0 \
+		-e TZ=$(HOST_TZ) \
 		-e LD_PRELOAD="$(LD_PRELOAD)" \
 		-e JAVA_TOOL_OPTIONS="-Dsun.java2d.xrender=false" \
 		-e JAVA_OPTS="-Dsun.java2d.xrender=false" \
