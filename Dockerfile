@@ -53,6 +53,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     libgmp-dev libmpfr-dev
 
+# dependencies for verilator
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    verilator
+
 # Set the locale, because Vivado crashes otherwise
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 ENV LANG=en_US.UTF-8
