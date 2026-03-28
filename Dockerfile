@@ -49,6 +49,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     curl ca-certificates gcc-arm-linux-gnueabihf
 
+# dependencies for xfft C model
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    libgmp-dev libmpfr-dev
+
 # Set the locale, because Vivado crashes otherwise
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 ENV LANG=en_US.UTF-8
